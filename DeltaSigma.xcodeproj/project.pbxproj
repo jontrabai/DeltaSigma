@@ -6,10 +6,15 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		30DEEC191AD5AB3B00A7EEE1 /* delta_sigma_order2.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = delta_sigma_order2.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		30DEEC0D1AD5A75F00A7EEE1 = {
 			isa = PBXGroup;
 			children = (
+				30DEEC191AD5AB3B00A7EEE1 /* delta_sigma_order2.py */,
 			);
 			sourceTree = "<group>";
 		};
