@@ -5,11 +5,13 @@
     @author: jbaird
     """
 from math import ceil, log, pi
+
 import numpy as np
 import scipy as sp
 from matplotlib import pyplot as plt
+from tqdm import tqdm
 
-# Inputs
+# %% cell
 SNDR = 60       # Signal to Noise + Distortion Ratio
 dSNDR = 0.5     # Desired SNDR Accuracy
 OSR = 32        # Oversampling ratio
@@ -21,7 +23,7 @@ levels = 3      # number of levels in the modulator
 vrefp = 1       # D/A maximum output level (Volts)
 vrefn = -1      # D/A minimum output level (Volts)
 
-# Calulations
+# %% calculations
 print("Calculation results basied on inputs\n")
 fs = fb*2*OSR   # Sampling frequency
 Order = 2       # Order of the modulator
@@ -34,7 +36,7 @@ print("Number of output bits:  ", bits)
 # Number of sample points
 # ========================
 num = 0
-for i in range(5, 21):
+for i in tqdm(range(5, 21)):
     if 2**i < SNDR/dSNDR:
         num = 2**i
     else:
@@ -59,7 +61,7 @@ vdaclev = vrefn + dv*lev   # D/A converter output levels
 
 def vdac(vi):
     vo = vdaclev[0]
-    for i in range(levels-1):
+    for i in tqdm(range(levels-1)):
         if vi < vadcth[i]:
             vo = vo
         else:
@@ -72,8 +74,8 @@ numpts = 100 # number of points for plotting A/D - D/A
 
 # input waveform for A/D - D/A plot
 # =================================
-vsw = [vrefn + j*((vrefp-vrefn)/(numpts)) for j in range(numpts)]
-dac = [vdac(vsw[j]) for j in range(numpts)]
+vsw = [vrefn + j*((vrefp-vrefn)/(numpts)) for j in tqdm(range(numpts))]
+dac = [vdac(vsw[j]) for j in tqdm(range(numpts))]
 # =================================
 
 # plot the A/D input and D/A output
@@ -96,7 +98,7 @@ vint2.append(0.0)
 vo.append(vdac(vint2[0]))
 
 # iterate over 'num' samples
-for i in range(1, num):
+for i in tqdm(range(1, num)):
     vint1.append(vint1[i-1]+alpha1*(vin1[i-1]-vo[i-1]))
     vint2.append(vint2[i-1]+alpha2*(vint1[i-1]-vo[i-1]))
     vo.append(vdac(vint2[i]))
